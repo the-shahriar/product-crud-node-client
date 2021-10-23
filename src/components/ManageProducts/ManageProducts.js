@@ -7,18 +7,29 @@ const ManageProducts = () => {
     const [product, setProduct] = useState({});
     const { Name, Price, Quantity } = product;
     const { id } = useParams();
+
     // reack hook from
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
-        // console.log(data);
+
+    const onSubmit = (data, e) => {
+        const url = `http://localhost:5000/products/${id}`;
+        axios.put(url, data)
+            .then(res => {
+                const result = res.data;
+                if (result.modifiedCount > 0) {
+                    alert("Product updated successfullu");
+                    e.target.reset();
+                }
+
+            })
     }
+
     // get the specifiq id_ product
     const getProduct = () => {
         const url = `http://localhost:5000/products/${id}`
         axios.get(url)
             .then(res => {
                 setProduct(res.data)
-                console.log(res.data)
             })
     }
 
@@ -45,7 +56,7 @@ const ManageProducts = () => {
                 <p className="text-danger">
                     {errors.Price?.type === 'required' && "You cant submit without Product Quantity"}
                 </p>
-                <input className="btn btn-primary w-25" type="Update" />
+                <input className="btn btn-primary w-25" type="submit" value="Update" />
             </form>
         </div >
     );
