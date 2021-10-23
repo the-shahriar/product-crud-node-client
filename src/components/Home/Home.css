@@ -1,0 +1,12 @@
+.products{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 20px;
+    grid-column-gap: 20px;
+}
+
+.product{
+    background-color: aliceblue;
+    margin: 40px 80px 40px 80px;
+    padding: 20px;
+}
